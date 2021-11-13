@@ -7,5 +7,5 @@ const CurrVIT = artifacts.require("CurrVIT");
 //deploy the CurrVIT CONTRACT
 
 module.exports = function (deployer) {
-  deployer.deploy(CurrVIT);
+  deployer.deploy(CurrVIT,1000000);
 };
