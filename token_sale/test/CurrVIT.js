@@ -47,7 +47,9 @@ contract('CurrVIT', function(accounts){
             //Testing 'require' statement by transfer of 
             //something larger than sender's bal(account[0] has 1M)
             //and raise an exception if happens so
-            //call() doesn't trigger a transaction,just inspects
+            //call() doesn't trigger a transaction,
+            //but returns the value,so we use it to inspect the return value
+            //it calls the function without writing to the blockchain
             return tokenInstance.transfer.call(accounts[1],99999999999); 
         }).then(assert.fail).catch(function(error){ 
             assert(error.message,'error message contains revert');

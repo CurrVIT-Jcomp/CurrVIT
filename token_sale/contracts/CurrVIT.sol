@@ -6,7 +6,7 @@ contract CurrVIT{
     //Name
     string public name='CurrVIT';
     //Symbol
-    string public symbol='CVT';
+    string public symbol='CVIT';
     //Constuctor: Initializer
     string public ver='CurrVIT v1';
     //Read total no. of tokens
@@ -14,7 +14,8 @@ contract CurrVIT{
     //totalSupply is a state variable accessible to all
     //Set tokens
     uint256 public totalSupply; //Declared VAR NAME NOT TO BE CHOSEN ARBITRARILY 
-
+    
+    mapping(address=>uint256) public balanceOf;
     //local variables in Solidity start with '_'
     constructor(uint256 _inittotalSupply) public{  
          //made public so as to run as when the contract is deployed
@@ -23,7 +24,7 @@ contract CurrVIT{
     }
 
     //Accounts and its balance stored as key:value pairs
-    mapping(address=>uint256) public balanceOf;
+    
 
     //Transfer fn
     //return bool
