@@ -10,6 +10,6 @@ module.exports = function (deployer) {
   deployer.deploy(CurrVIT,1000000).then(function(){
     //token price set at 0.001 ETH
     var tokenPrice=1000000000000000;
-    deployer.deploy(CurrVITSale,CurrVIT.address,tokenPrice);
+    return deployer.deploy(CurrVITSale,CurrVIT.address,tokenPrice);
   });
 };
