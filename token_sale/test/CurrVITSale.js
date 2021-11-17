@@ -1,5 +1,5 @@
 const CurrVIT = artifacts.require("CurrVIT");
-const CurrVITSale = artifacts.require("CurrVITSale.sol");
+const CurrVITSale = artifacts.require("CurrVITSale");
 
 contract('CurrVITSale', function (accounts) {
     var tokenInstance;
