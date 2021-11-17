@@ -92,8 +92,7 @@ App = {
       $('.tokens-sold').html(App.tokensSold);
       $('.tokens-available').html(App.tokensAvailable);
 
-      var progressPercent = (Math.ceil(App.tokensSold) / App.tokensAvailable) * 100;
-      $('#progress').css('width', progressPercent + '%');
+      
 
       // Load token contract
       App.contracts.CurrVIT.deployed().then(function(instance) {
