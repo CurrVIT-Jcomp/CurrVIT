@@ -26,18 +26,18 @@ App = {
   },
 
   initContracts: function() {
-    $.getJSON("DappTokenSale.json", function(dappTokenSale) {
-      App.contracts.DappTokenSale = TruffleContract(dappTokenSale);
-      App.contracts.DappTokenSale.setProvider(App.web3Provider);
-      App.contracts.DappTokenSale.deployed().then(function(dappTokenSale) {
-        console.log("Dapp Token Sale Address:", dappTokenSale.address);
+    $.getJSON("CurrVITSale.json", function(CurrVITSale) {
+      App.contracts.CurrVITSale = TruffleContract(CurrVITSale);
+      App.contracts.CurrVITSale.setProvider(CurrVITSale);
+      App.contracts.CurrVITSale.deployed().then(function(CurrVITSale) {
+        console.log("Dapp Token Sale Address:", CurrVITSale.address);
       });
     }).done(function() {
-      $.getJSON("DappToken.json", function(dappToken) {
-        App.contracts.DappToken = TruffleContract(dappToken);
-        App.contracts.DappToken.setProvider(App.web3Provider);
-        App.contracts.DappToken.deployed().then(function(dappToken) {
-          console.log("Dapp Token Address:", dappToken.address);
+      $.getJSON("CurrVIT.json", function(CurrVIT) {
+        App.contracts.CurrVIT = TruffleContract(CurrVIT);
+        App.contracts.CurrVIT.setProvider(App.web3Provider);
+        App.contracts.CurrVIT.deployed().then(function(CurrVIT) {
+          console.log("Dapp Token Address:", CurrVIT.address);
         });
 
         App.listenForEvents();
@@ -48,7 +48,7 @@ App = {
 
   // Listen for events emitted from the contract
   listenForEvents: function() {
-    App.contracts.DappTokenSale.deployed().then(function(instance) {
+    App.contracts.CurrVITSale.deployed().then(function(instance) {
       instance.Sell({}, {
         fromBlock: 0,
         toBlock: 'latest',
@@ -80,9 +80,9 @@ App = {
     })
 
     // Load token sale contract
-    App.contracts.DappTokenSale.deployed().then(function(instance) {
-      dappTokenSaleInstance = instance;
-      return dappTokenSaleInstance.tokenPrice();
+    App.contracts.CurrVITSale.deployed().then(function(instance) {
+      CurrVITSaleInstance = instance;
+      return CurrVITSaleInstance.tokenPrice();
     }).then(function(tokenPrice) {
       App.tokenPrice = tokenPrice;
       $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
@@ -96,9 +96,9 @@ App = {
       $('#progress').css('width', progressPercent + '%');
 
       // Load token contract
-      App.contracts.DappToken.deployed().then(function(instance) {
-        dappTokenInstance = instance;
-        return dappTokenInstance.balanceOf(App.account);
+      App.contracts.CurrVIT.deployed().then(function(instance) {
+        CurrVITInstance = instance;
+        return CurrVITInstance.balanceOf(App.account);
       }).then(function(balance) {
         $('.dapp-balance').html(balance.toNumber());
         App.loading = false;
@@ -112,7 +112,7 @@ App = {
     $('#content').hide();
     $('#loader').show();
     var numberOfTokens = $('#numberOfTokens').val();
-    App.contracts.DappTokenSale.deployed().then(function(instance) {
+    App.contracts.CurrVITSale.deployed().then(function(instance) {
       return instance.buyTokens(numberOfTokens, {
         from: App.account,
         value: numberOfTokens * App.tokenPrice,
