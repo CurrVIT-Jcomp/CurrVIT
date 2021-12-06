@@ -12,7 +12,7 @@ contract CurrVITSale {
     event Sell(address _buyer, uint256 _amount);  //keep track of buyer and amount
 
     constructor (CurrVIT _tokenContract, uint256 _tokenPrice) public {
-        admin=msg.sender;     //for deploying the contract
+        admin = payable(address(msg.sender));    //for deploying the contract
         tokenContract = _tokenContract;  // assigning value and used for buying tokens later
         tokenPrice = _tokenPrice;        // keep track of token price
     }
@@ -23,7 +23,7 @@ contract CurrVITSale {
 
     function buyTokens(uint256 _numberOfTokens) public payable {  // payable so someone can send ether
         require(msg.value == multiply(_numberOfTokens, tokenPrice));  //checks whether no. of tokens admin gave is equal to tokens bought by investor
-        require(tokenContract.balanceOf((this)) >= _numberOfTokens); //To check there are enough token owned by smart contract
+        require(tokenContract.balanceOf(address(this)) >= _numberOfTokens); //To check there are enough token owned by smart contract
         require(tokenContract.transfer(msg.sender, _numberOfTokens)); /*sending tokens to the buyer and number of tokens he bought 
                                                                       ie to check whether transfer is successfull*/
                                                                        
@@ -33,9 +33,13 @@ contract CurrVITSale {
     }
 
     function endSale() public {
-        require(admin==msg.sender);  //He will end the sale
-        require(tokenContract.transfer(admin, tokenContract.balanceOf(address(this)))); //Transfer the remaining token to the admin
-
-        admin.transfer(address(this).balance); //destroy the contract
+        require(msg.sender == admin);
+        require(
+            tokenContract.transfer(
+                admin,
+                tokenContract.balanceOf(address(this))
+            )
+        );
+        selfdestruct(admin);
     }
 }

@@ -1,3 +1,4 @@
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -30,7 +31,7 @@ App = {
       App.contracts.CurrVITSale = TruffleContract(CurrVITSale);
       App.contracts.CurrVITSale.setProvider(CurrVITSale);
       App.contracts.CurrVITSale.deployed().then(function(CurrVITSale) {
-        console.log("Dapp Token Sale Address:", CurrVITSale.address);
+        console.log("CurrVIT Token Sale Address:", CurrVITSale.address);
       });
     }).done(function() {
       $.getJSON("CurrVIT.json", function(CurrVIT) {
@@ -86,7 +87,7 @@ App = {
     }).then(function(tokenPrice) {
       App.tokenPrice = tokenPrice;
       $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
-      return dappTokenSaleInstance.tokensSold();
+      return CurrVITSaleInstance.tokensSold();
     }).then(function(tokensSold) {
       App.tokensSold = tokensSold.toNumber();
       $('.tokens-sold').html(App.tokensSold);
